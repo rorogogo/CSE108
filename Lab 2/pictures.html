@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>- 東方 -</title>
+        <link rel="stylesheet" href="./css/style.css">
+    </head>
+    <body>
+        <audio id="bgm" src="./Media/MoF3.mp3" loop></audio>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a class="active" href="pictures.html">Pictures</a></li>
+            <li><a href="characters.html">Characters</a></li>
+            <li><a href="requirements.html">Required</a></li>
+            <li><a href="index.html#whatis2hu">What is Touhou?</a></li>
+            <li style="float:right !important"><button id="musicToggle">Play Touhou Music ♫</button></li>
+        </ul>
+        <h1 class="bordered-text center" style="color:rgb(63, 86, 161)">Here are some Touhou Fanarts that I just pulled from google images:</h1>
+
+
+        <!-- Trigger the Modal -->
+        <div class="gallery-container">
+            <img class="gallery-img" src="./Media/reimu.jpg" alt="Reimu Hakurei">
+            <img class="gallery-img" src="./Media/Marisa.jpg" alt="Marisa Kirisame">
+            <img class="gallery-img" src="./Media/Sakuya.jpg" alt="Sakuya Izayoi">
+            
+        </div>
+
+        <div class = "gallery-container">
+            <img class="gallery-img" src="./Media/Flan.jpg" alt="Flandre Scarlet">
+            <img class="gallery-img" src="./Media/Youmu.jpg" alt="Youmu Konpaku">
+        </div>
+
+    <!-- You only need ONE modal structure for the whole page -->
+    <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="img01">
+        <div id="caption"></div>
+    </div>
+
+
+        <!-- The Close Button -->
+        <span class="close">&times;</span>
+
+        <!-- Modal Content (The Image) -->
+        <img class="modal-content" id="img01">
+
+        <!-- Modal Caption (Image Text) -->
+        <div id="caption"></div>
+        </div>
+        <script src="./js/script.js"></script>
+    </body>
+</html>
