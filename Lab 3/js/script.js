@@ -11,6 +11,7 @@ let firstNumber = '';
 let secondNumber = '';
 let operator = null;
 let shouldResetOutput = false;
+let lastOperator = null; // Track the last operator used
 
 // Number button clicks
 numberButtons.forEach(button => {
@@ -32,16 +33,47 @@ numberButtons.forEach(button => {
     });
 });
 
+// Helper function to perform calculation
+function performCalculation(num1, op, num2) {
+    num1 = parseFloat(num1);
+    num2 = parseFloat(num2);
+    let result;
+    
+    switch(op) {
+        case '+':
+            result = num1 + num2;
+            break;
+        case '-':
+            result = num1 - num2;
+            break;
+        case '*':
+            result = num1 * num2;
+            break;
+        case '/':
+            result = num1 / num2;
+            break;
+    }
+    return result;
+}
+
 // Operator button clicks
 operatorButtons.forEach(button => {
     button.addEventListener('click', () => {
         const op = button.getAttribute('data-operator');
         
-        if (firstNumber && !shouldResetOutput) {
+        // If we have a pending operation, calculate it first
+        if (firstNumber && operator && output.value && !shouldResetOutput) {
+            secondNumber = output.value;
+            const result = performCalculation(firstNumber, operator, secondNumber);
+            output.value = result;
+            firstNumber = result;
+            secondNumber = '';
+        } else if (firstNumber && !shouldResetOutput) {
             firstNumber = output.value;
         }
         
         operator = op;
+        lastOperator = op;
         shouldResetOutput = true;
         
         // Highlight the active operator
@@ -54,26 +86,7 @@ operatorButtons.forEach(button => {
 equalsButton.addEventListener('click', () => {
     if (firstNumber && operator && output.value) {
         secondNumber = output.value;
-        let result;
-        
-        firstNumber = parseFloat(firstNumber);
-        secondNumber = parseFloat(secondNumber);
-        
-        switch(operator) {
-            case '+':
-                result = firstNumber + secondNumber;
-                break;
-            case '-':
-                result = firstNumber - secondNumber;
-                break;
-            case '*':
-                result = firstNumber * secondNumber;
-                break;
-            case '/':
-                result = firstNumber / secondNumber;
-                break;
-        }
-        
+        const result = performCalculation(firstNumber, operator, secondNumber);
         output.value = result;
         firstNumber = result;
         secondNumber = '';
@@ -82,6 +95,12 @@ equalsButton.addEventListener('click', () => {
         
         // Remove highlight
         operatorButtons.forEach(btn => btn.classList.remove('active'));
+    } else if (firstNumber && lastOperator && shouldResetOutput) {
+        // Pressing equals again repeats the last operation
+        const result = performCalculation(firstNumber, lastOperator, firstNumber);
+        output.value = result;
+        firstNumber = result;
+        shouldResetOutput = true;
     }
 });
 
@@ -91,6 +110,7 @@ clearButton.addEventListener('click', () => {
     firstNumber = '';
     secondNumber = '';
     operator = null;
+    lastOperator = null;
     shouldResetOutput = false;
     
     operatorButtons.forEach(btn => btn.classList.remove('active'));
