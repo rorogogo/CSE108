@@ -1,3 +1,7 @@
+body{
+    background-color: grey;
+}
+
 /* Calculator container */
 .calculator {
     display: grid;
@@ -40,7 +44,7 @@
 
 /* Operator buttons */
 .operator {
-    background-color: #ff9500;
+    background-color: #e8790a;
     color: #fff;
     padding: 20px;
     font-size: 18px;
@@ -50,17 +54,17 @@
 }
 
 .operator:hover {
-    background-color: #ffb143;
+    background-color: #e9a84d;
 }
 
 .operator.active {
-    background-color: #cc7a00;
+    background-color: #a56503;
 }
 
 /* Clear button */
 .clear {
     grid-column: 4 / 5;
-    background-color: #d32f2f;
+    background-color: #981e1e;
     color: #fff;
     padding: 20px;
     font-size: 18px;
@@ -69,12 +73,12 @@
     cursor: pointer;
 }
 .clear:hover {
-    background-color: #f44336;
+    background-color: #e6574c;
 }
 
 /* Equals button */
 .equals {
-    background-color: #4caf50;
+    background-color: #087a0c;
     color: #fff;
     padding: 20px;
     font-size: 18px;
@@ -84,7 +88,7 @@
 }
 
 .equals:hover {
-    background-color: #66bb6a;
+    background-color: #418044;
 }
 
 /* Decimal button */
