@@ -82,27 +82,30 @@ operatorButtons.forEach(button => {
     });
 });
 
+let lastOperand = null;
+
 // Equals button
 equalsButton.addEventListener('click', () => {
     if (firstNumber && operator && output.value) {
         secondNumber = output.value;
         const result = performCalculation(firstNumber, operator, secondNumber);
         output.value = result;
+        lastOperand = secondNumber; // Store last operand
         firstNumber = result;
         secondNumber = '';
+        lastOperator = operator; // Store last operator
         operator = null;
         shouldResetOutput = true;
-        
+
         // Remove highlight
         operatorButtons.forEach(btn => btn.classList.remove('active'));
-    } else if (firstNumber && lastOperator && shouldResetOutput) {
-        // Pressing equals again repeats the last operation
-        const result = performCalculation(firstNumber, lastOperator, firstNumber);
+    } else if (firstNumber && lastOperator && lastOperand && shouldResetOutput) {
+        // Repeat last operation with last operand
+        const result = performCalculation(firstNumber, lastOperator, lastOperand);
         output.value = result;
         firstNumber = result;
         shouldResetOutput = true;
-    }
-});
+    }});
 
 // Clear button
 clearButton.addEventListener('click', () => {
