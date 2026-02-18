@@ -1,0 +1,103 @@
+/* Calculator container */
+.calculator {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 20px;
+    background-color: #333;
+    border: 3px solid #000;
+    border-radius: 10px;
+    width: 400px;
+    margin: 50px auto;
+}
+
+/* Output field spans 3 columns */
+#output {
+    grid-column: 1 / 4;
+    padding: 20px;
+    font-size: 24px;
+    text-align: right;
+    background-color: #222;
+    color: #fff;
+    border: 2px solid #555;
+    border-radius: 5px;
+}
+
+/* Number buttons */
+.number {
+    background-color: #555;
+    color: #fff;
+    padding: 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.number:hover {
+    background-color: #777;
+}
+
+/* Operator buttons */
+.operator {
+    background-color: #ff9500;
+    color: #fff;
+    padding: 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.operator:hover {
+    background-color: #ffb143;
+}
+
+.operator.active {
+    background-color: #cc7a00;
+}
+
+/* Clear button */
+.clear {
+    grid-column: 4 / 5;
+    background-color: #d32f2f;
+    color: #fff;
+    padding: 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.clear:hover {
+    background-color: #f44336;
+}
+
+/* Equals button */
+.equals {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.equals:hover {
+    background-color: #66bb6a;
+}
+
+/* Decimal button */
+.decimal {
+    background-color: #555;
+    color: #fff;
+    padding: 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.decimal:hover {
+    background-color: #777;
+}

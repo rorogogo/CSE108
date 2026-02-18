@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Requirements:
+    ⦁	Has an output field that represents the numbers input or the answer
+    ⦁	Has number buttons representing all numbers (0-9)
+    ⦁	Has a decimal (.) button to make decimals that can only be used once (e.g. 3.5 – OK, 4.5.6 – not OK)
+    ⦁	Has arithmetic action buttons for addition, subtraction, multiplication, and division
+    ⦁	Has an equals button that outputs the result from the calculation of the first and second numbers input and the arithmetic action clicked
+    ⦁	Has a clear button that clears the inputs, arithmetic actions, and output field
+    Here are some additional requirements:
+    ⦁	The numbers clicked from the number buttons should be appended to the numbers in the output field until an arithmetic action button is pressed. Once an arithmetic action is pressed, a new number can be input.
+    ⦁	The arithmetic action button should be highlighted after it is clicked to show what operation is occurring. The button stays highlighted until another number is input, another arithmetic action button is pressed, or the equals or clear buttons are pressed.
+    ⦁	When the equals button is pressed a second time, it performs the last action with the answer being the first number input (e.g. 2+4 click equals -> 6, click equals again equates to 6+4 -> 10, click equals again equates to 10+4 -> 14)
+    ⦁	When an arithmetic action button is clicked again, after a number is input, an arithmetic action button is clicked and a second number is input, it effectively acts as an equals button and makes the arithmetic action button clicked now active and highlighted
+    ⦁	Have different colors for number buttons, arithmetic actions and equals buttons, and clear buttons
+    ⦁	All buttons and output should be arranged in a grid with a background and border    -->
+
+    <div class="calculator">
+        <input type="text" id="output" class="output" readonly>
+        <button class="btn clear" id="clear">C</button>
+        
+        <button class="btn number" data-number="7">7</button>
+        <button class="btn number" data-number="8">8</button>
+        <button class="btn number" data-number="9">9</button>
+        <button class="btn operator" data-operator="/">÷</button>
+        
+        <button class="btn number" data-number="4">4</button>
+        <button class="btn number" data-number="5">5</button>
+        <button class="btn number" data-number="6">6</button>
+        <button class="btn operator" data-operator="*">×</button>
+        
+        <button class="btn number" data-number="1">1</button>
+        <button class="btn number" data-number="2">2</button>
+        <button class="btn number" data-number="3">3</button>
+        <button class="btn operator" data-operator="-">−</button>
+        
+        <button class="btn decimal" id="decimal">.</button>
+        <button class="btn number" data-number="0">0</button>
+        <button class="btn operator" data-operator="+">+</button>
+        <button class="btn equals" id="equals">=</button>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
