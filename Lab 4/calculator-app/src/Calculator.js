@@ -1,7 +1,11 @@
+// Calculator.js
 import React, { useState } from "react";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 import "./Calculator.css";
 
-function Calculator() {
+export default function Calculator() {
+  // State variables
   const [display, setDisplay] = useState("");
   const [firstNumber, setFirstNumber] = useState("");
   const [secondNumber, setSecondNumber] = useState("");
@@ -10,70 +14,97 @@ function Calculator() {
   const [lastOperator, setLastOperator] = useState(null);
   const [lastOperand, setLastOperand] = useState(null);
 
-  const performCalculation = (num1, op, num2) => {
+  // Perform calculation helper
+  function performCalculation(num1, op, num2) {
     num1 = parseFloat(num1);
     num2 = parseFloat(num2);
-    switch (op) {
-      case "+": return num1 + num2;
-      case "-": return num1 - num2;
-      case "*": return num1 * num2;
-      case "/": return num2 === 0 ? "Error" : num1 / num2;
-      default: return num2;
-    }
-  };
+    let result;
 
-  const handleNumber = (num) => {
-    if (shouldReset || display === "Error") {
-      setDisplay(num);
+    switch (op) {
+      case "+":
+        result = num1 + num2;
+        break;
+      case "-":
+        result = num1 - num2;
+        break;
+      case "*":
+        result = num1 * num2;
+        break;
+      case "/":
+        result = num2 === 0 ? "Error" : num1 / num2;
+        break;
+      default:
+        return num2;
+    }
+    return result.toString();
+  }
+
+  // Handle number button click
+  function handleNumber(number) {
+    if (shouldReset) {
+      setDisplay(number);
       setShouldReset(false);
     } else {
-      setDisplay(display + num);
+      // Prevent leading zeros like 00
+      if (display === "0") {
+        setDisplay(number);
+      } else {
+        setDisplay(display + number);
+      }
     }
-    if (!operator) setFirstNumber(display + num);
-    else setSecondNumber(display + num);
-  };
 
-  const handleDecimal = () => {
-    if (!display.includes(".") && !shouldReset && display !== "Error") {
-      setDisplay(display + ".");
-    } else if (shouldReset) {
+    if (!operator) {
+      setFirstNumber(display + number);
+    } else {
+      setSecondNumber(display + number);
+    }
+  }
+
+  // Handle decimal button click
+  function handleDecimal() {
+    if (shouldReset) {
       setDisplay("0.");
       setShouldReset(false);
+    } else if (!display.includes(".")) {
+      setDisplay(display + ".");
     }
-  };
+  }
 
-  const handleOperator = (op) => {
-    if (firstNumber && operator && display && !shouldReset) {
+  // Handle operator button click
+  function handleOperator(op) {
+    // If there's already an operator and second number, calculate first
+    if (operator && secondNumber) {
       const result = performCalculation(firstNumber, operator, display);
-      setDisplay(result.toString());
-      setFirstNumber(result.toString());
+      setDisplay(result);
+      setFirstNumber(result);
       setSecondNumber("");
-    } else if (firstNumber && !shouldReset) {
+    } else {
       setFirstNumber(display);
     }
     setOperator(op);
     setLastOperator(op);
     setShouldReset(true);
-  };
+  }
 
-  const handleEquals = () => {
-    if (firstNumber && operator && display) {
+  // Handle equals button click
+  function handleEquals() {
+    if (operator && !shouldReset) {
       const result = performCalculation(firstNumber, operator, display);
-      setDisplay(result.toString());
+      setDisplay(result);
+      setFirstNumber(result);
       setLastOperand(display);
-      setFirstNumber(result.toString());
-      setSecondNumber("");
       setOperator(null);
       setShouldReset(true);
-    } else if (firstNumber && lastOperator && lastOperand && shouldReset) {
-      const result = performCalculation(firstNumber, lastOperator, lastOperand);
-      setDisplay(result.toString());
-      setFirstNumber(result.toString());
+    } else if (lastOperator && lastOperand) {
+      const result = performCalculation(display, lastOperator, lastOperand);
+      setDisplay(result);
+      setFirstNumber(result);
       setShouldReset(true);
     }
-  };
+  }
 
-  const handleClear = () => {
+  // Handle clear button click
+  function handleClear() {
     setDisplay("");
     setFirstNumber("");
     setSecondNumber("");
@@ -81,65 +112,132 @@ function Calculator() {
     setLastOperator(null);
     setLastOperand(null);
     setShouldReset(false);
-  };
+  }
 
   return (
-    <div className="calculator" role="main" aria-label="Calculator">
-      <input
-        type="text"
+    <div className="calculator">
+      <TextField
         className="output"
         value={display}
-        readOnly
-        aria-live="polite"
+        InputProps={{
+          readOnly: true,
+          style: {
+            color: "#fff",
+            backgroundColor: "#222",
+            fontSize: 24,
+            textAlign: "right",
+          },
+        }}
+        variant="outlined"
+        fullWidth
+        margin="dense"
+        aria-label="Calculator output"
       />
 
-      <button className="clear" onClick={handleClear} aria-label="Clear">C</button>
+      <Button
+        variant="contained"
+        color="error"
+        onClick={handleClear}
+        className="clear"
+        aria-label="Clear"
+      >
+        C
+      </Button>
 
-      <button className="number" onClick={() => handleNumber("7")}>7</button>
-      <button className="number" onClick={() => handleNumber("8")}>8</button>
-      <button className="number" onClick={() => handleNumber("9")}>9</button>
-      <button
-        className={`operator ${operator === "/" ? "active" : ""}`}
+      {/* Number buttons */}
+      {["7", "8", "9"].map((num) => (
+        <Button
+          key={num}
+          variant="contained"
+          onClick={() => handleNumber(num)}
+          className="number"
+          aria-label={`Number ${num}`}
+        >
+          {num}
+        </Button>
+      ))}
+      <Button
+        variant="contained"
         onClick={() => handleOperator("/")}
+        className={`operator ${operator === "/" ? "active" : ""}`}
         aria-label="Divide"
       >
         ÷
-      </button>
+      </Button>
 
-      <button className="number" onClick={() => handleNumber("4")}>4</button>
-      <button className="number" onClick={() => handleNumber("5")}>5</button>
-      <button className="number" onClick={() => handleNumber("6")}>6</button>
-      <button
-        className={`operator ${operator === "*" ? "active" : ""}`}
+      {["4", "5", "6"].map((num) => (
+        <Button
+          key={num}
+          variant="contained"
+          onClick={() => handleNumber(num)}
+          className="number"
+          aria-label={`Number ${num}`}
+        >
+          {num}
+        </Button>
+      ))}
+      <Button
+        variant="contained"
         onClick={() => handleOperator("*")}
+        className={`operator ${operator === "*" ? "active" : ""}`}
         aria-label="Multiply"
       >
         ×
-      </button>
+      </Button>
 
-      <button className="number" onClick={() => handleNumber("1")}>1</button>
-      <button className="number" onClick={() => handleNumber("2")}>2</button>
-      <button className="number" onClick={() => handleNumber("3")}>3</button>
-      <button
-        className={`operator ${operator === "-" ? "active" : ""}`}
+      {["1", "2", "3"].map((num) => (
+        <Button
+          key={num}
+          variant="contained"
+          onClick={() => handleNumber(num)}
+          className="number"
+          aria-label={`Number ${num}`}
+        >
+          {num}
+        </Button>
+      ))}
+      <Button
+        variant="contained"
         onClick={() => handleOperator("-")}
+        className={`operator ${operator === "-" ? "active" : ""}`}
         aria-label="Subtract"
       >
         −
-      </button>
+      </Button>
 
-      <button className="decimal" onClick={handleDecimal} aria-label="Decimal point">.</button>
-      <button className="number" onClick={() => handleNumber("0")}>0</button>
-      <button
-        className={`operator ${operator === "+" ? "active" : ""}`}
+      <Button
+        variant="contained"
+        onClick={handleDecimal}
+        className="decimal"
+        aria-label="Decimal point"
+      >
+        .
+      </Button>
+      <Button
+        variant="contained"
+        onClick={() => handleNumber("0")}
+        className="number"
+        aria-label="Number 0"
+      >
+        0
+      </Button>
+      <Button
+        variant="contained"
         onClick={() => handleOperator("+")}
+        className={`operator ${operator === "+" ? "active" : ""}`}
         aria-label="Add"
       >
         +
-      </button>
-      <button className="equals" onClick={handleEquals} aria-label="Equals">=</button>
+      </Button>
+      <Button
+        variant="contained"
+        color="success"
+        onClick={handleEquals}
+        className="equals"
+        aria-label="Equals"
+      >
+        =
+      </Button>
     </div>
   );
 }
-
-export default Calculator;
