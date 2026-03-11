@@ -5,6 +5,11 @@ function displayGrades(data) {
     const table = document.getElementById("gradesTable");
     table.innerHTML = "";
 
+    // If it's not an array, convert it into one
+    if (!Array.isArray(data)) {
+        data = [data];
+    }
+
     data.forEach(student => {
 
         const row = document.createElement("tr");
@@ -25,16 +30,28 @@ function getAllGrades() {
 
     fetch(BASE_URL)
     .then(response => response.json())
-    .then(data => displayGrades(data));
+    .then(data => {
+
+        const formatted = Object.entries(data).map(([name, grade]) => ({
+            name: name,
+            grade: grade
+        }));
+
+        displayGrades(formatted);
+    });
 }
 function getStudent() {
 
     const name = document.getElementById("searchName").value;
-    const encoded = encodeURIComponent(name);
 
-    fetch(BASE_URL + "/" + encoded)
-    .then(response => response.json())
-    .then(data => displayGrades([data]));
+    if (name === "") {
+        alert("Please enter a student name");
+        return;
+    }
+
+    fetch(BASE_URL + "/" + encodeURIComponent(name))
+        .then(response => response.json())
+        .then(data => displayGrades(data));
 }
 function addStudent() {
 
