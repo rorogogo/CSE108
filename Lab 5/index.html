@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Checker CSE108</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+    <h1>Student Grades</h1>
+
+    <button onclick="getAllGrades()">Show All Grades</button>
+
+    <h2>Search Student</h2>
+    <input id="searchName" placeholder="Student Name">
+    <button onclick="getStudent()">Search</button>
+
+    <h2>Add Student</h2>
+    <input id="newName" placeholder="Name">
+    <input id="newGrade" placeholder="Grade">
+    <button onclick="addStudent()">Add</button>
+
+    <h2>Edit Grade</h2>
+    <input id="editName" placeholder="Name">
+    <input id="editGrade" placeholder="New Grade">
+    <button onclick="updateGrade()">Update</button>
+
+    <h2>Delete Student</h2>
+    <input id="deleteName" placeholder="Name">
+    <button onclick="deleteStudent()">Delete</button>
+
+    <h2>Grades Table</h2>
+    <table border="1">
+    <thead>
+    <tr>
+    <th>Name</th>
+    <th>Grade</th>
+    </tr>
+    </thead>
+    <tbody id="gradesTable"></tbody>
+    </table>
+
+    <script src="./js/script.js"></script>
+</body>
+</html>
